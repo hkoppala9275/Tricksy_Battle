@@ -111,3 +111,31 @@ def main():
     # Track extra deals when hands drop to 4 twice
     deals_done = 0
     round_num = 0
+
+# Main game loop: up to 16 rounds or early termination
+    while round_num < 16 and not early_termination(score[p1.name], score[p2.name]):
+        round_num += 1
+        print(f"--- Round {round_num} ---")
+
+        # Leader plays
+        lead_card = get_lead_card(leader)
+        leader.hand.remove(lead_card)
+        print(f"{leader.name} leads: {lead_card}")
+
+        # Follower plays
+        follow_card = get_follow_card(follower, lead_card.suit)
+        follower.hand.remove(follow_card)
+        print(f"{follower.name} plays: {follow_card}")
+
+        # Determine trick winner and update score
+        winner = determine_winner(leader, lead_card, follower, follow_card)
+        print(f"{winner.name} wins the trick!\n")
+        score[winner.name] += 1
+
+        # Next leader is trick winner
+        leader, follower = (winner, p1 if winner is p2 else p2)
+
+        # Reveal one card from deck each trick
+        rev = deck.draw()
+        if rev: 
+            print(f"Revealed from deck: {rev}")
