@@ -149,3 +149,21 @@ def main():
 
         # Show current score
         print(f"Score → {p1.name}: {score[p1.name]} | {p2.name}: {score[p2.name]}\n")
+
+# Game end summary
+    print("=== GAME OVER ===")
+    print(f"Final Score → {p1.name}: {score[p1.name]} | {p2.name}: {score[p2.name]}")
+    # Handle "shoot the moon" scenario
+    if score[p1.name] == 0 and score[p2.name] == 16:
+        print(f"{p1.name} shot the moon and wins 17-{score[p2.name]}!")
+    elif score[p2.name] == 0 and score[p1.name] == 16:
+        print(f"{p2.name} shot the moon and wins 17-{score[p1.name]}!")
+    elif score[p1.name] > score[p2.name]:
+        print(f"{p1.name} wins!")
+    elif score[p2.name] > score[p1.name]:
+        print(f"{p2.name} wins!")
+    else:
+        print("It's a tie!")
+
+if __name__ == "__main__":
+    main()
