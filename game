@@ -13,3 +13,11 @@ def __init__(self, suit, rank):
         self.suit = suit
         self.rank = rank
         self.value = Card.VALUE_MAP[rank]
+
+def __str__(self):
+        # Human-readable representation, e.g., "Queen of Hearts"
+        return f"{self.rank} of {self.suit}"
+
+def __repr__(self):
+        # Debug representation matches str()
+        return str(self)
