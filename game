@@ -7,3 +7,9 @@ class Card:
     RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'Ace']
     # Map '2'->2 through 'Ace'->14
     VALUE_MAP = {rank: i+2 for i, rank in enumerate(RANKS)}
+
+def __init__(self, suit, rank):
+        # Initialize card with given suit and rank, set its numeric value
+        self.suit = suit
+        self.rank = rank
+        self.value = Card.VALUE_MAP[rank]
