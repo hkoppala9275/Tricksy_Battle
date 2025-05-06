@@ -139,3 +139,13 @@ def main():
         rev = deck.draw()
         if rev: 
             print(f"Revealed from deck: {rev}")
+
+# Deal additional cards when hands drop to 4 (twice)
+        if len(p1.hand) == 4 and len(p2.hand) == 4 and deals_done < 2:
+            print("\nDealing 4 new cards to each player...\n")
+            p1.hand.extend(deck.deal(4))
+            p2.hand.extend(deck.deal(4))
+            deals_done += 1
+
+        # Show current score
+        print(f"Score → {p1.name}: {score[p1.name]} | {p2.name}: {score[p2.name]}\n")
