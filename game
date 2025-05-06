@@ -21,3 +21,19 @@ def __str__(self):
 def __repr__(self):
         # Debug representation matches str()
         return str(self)
+
+class Deck:
+    # Represents a 48-card deck (Kings removed)
+    # Supports shuffling, dealing, and drawing
+    def __init__(self):
+        # Create and shuffle the deck
+        self.cards = [Card(s, r) for s in Card.SUITS for r in Card.RANKS]
+        random.shuffle(self.cards)
+
+    def deal(self, n):
+        # Deal n cards from the top of the deck
+        return [self.cards.pop() for _ in range(n)]
+    
+    def draw(self):
+        # Reveal one card (pop from deck) or None if empty
+        return self.cards.pop() if self.cards else None
