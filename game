@@ -37,3 +37,10 @@ class Deck:
     def draw(self):
         # Reveal one card (pop from deck) or None if empty
         return self.cards.pop() if self.cards else None
+
+class Player:
+    # Represents a game player with a name and hand of cards
+    def __init__(self, name):
+        self.name = name
+        # List of cards objects
+        self.hand = []
