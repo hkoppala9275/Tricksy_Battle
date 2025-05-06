@@ -44,3 +44,18 @@ class Player:
         self.name = name
         # List of cards objects
         self.hand = []
+
+def prompt_card_choice(player, valid_choices):
+    # Prompt the given player to select one card from valid_choices
+    # Prints indexed list, reads input, and returns the chosen card
+    while True:
+        # Display choices with indices
+        for idx, card in enumerate(valid_choices, 1):
+            print(f"    {idx}: {card}")
+        choice = input(f"{player.name}, choose a card (1-{len(valid_choices)}): ")
+        if choice.isdigit():
+            i = int(choice) - 1
+            # Validate the index range
+            if 0 <= i < len(valid_choices):
+                return valid_choices[i]
+        print("Invalid selection; try again.")
