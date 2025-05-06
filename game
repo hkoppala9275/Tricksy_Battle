@@ -59,3 +59,55 @@ def prompt_card_choice(player, valid_choices):
             if 0 <= i < len(valid_choices):
                 return valid_choices[i]
         print("Invalid selection; try again.")
+
+def get_lead_card(player):
+    # Let the leader pick any card from their hand to lead the trick
+    print(f"\n{player.name}'s hand: " + ", ".join(str(c) for c in player.hand))
+    return prompt_card_choice(player, player.hand)
+
+def get_follow_card(player, lead_suit):
+    # Force the follower to follow suit if possible; otherwise allow any card
+    # Filter cards matching the lead suit
+    same_suit = [c for c in player.hand if c.suit == lead_suit]
+    if same_suit:
+        print(f"{player.name}, you must follow suit ({lead_suit}):")
+        return prompt_card_choice(player, same_suit)
+    else:
+        print(f"{player.name}, you have no {lead_suit}. Play any card: ")
+        return prompt_card_choice(player, player.hand)
+
+def determine_winner(lead_player, lead_card, follow_player, follow_card):
+    # Determine the winner of the trick:
+    # If follower followed suit, compare value
+    # Otherwise, leader wins by default
+    if follow_card.suit == lead_card.suit:
+        # Higher value wins among same suit
+        return follow_player if follow_card.value > lead_card.value else lead_player
+    else:
+        # Failure to follow suit gives the leader the trick
+        return lead_player
+    
+def early_termination(score1, score2):
+    # Check for early end: one player reachers 9+ points while opponent has ≥ 1
+    return (score1 >= 9 and score2 >= 1) or (score2 >= 9 and score1 >= 1)
+
+def main():
+    # Game setup
+    print("Welcome to Tricksy Battle!\n")
+    p1 = Player(input("Enter name for Player 1: ").strip() or "Player 1")
+    p2 = Player(input("Enter name for Player 2: ").strip() or "Player 2")
+
+    deck = Deck()
+    # Deal 8 cards to each player
+    p1.hand = deck.deal(8)
+    p2.hand = deck.deal(8)
+
+    score = {p1.name: 0, p2.name: 0}
+
+    # Randomly choose initial leader
+    leader, follower = (p1, p2) if random.choice([True, False]) else (p2, p1)
+    print(f"\n{leader.name} will lead the first trick.\n")
+
+    # Track extra deals when hands drop to 4 twice
+    deals_done = 0
+    round_num = 0
